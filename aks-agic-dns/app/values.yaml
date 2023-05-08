@@ -1,0 +1,29 @@
+apps:
+  - name: nodejs-hello-world
+    image:
+      repository: aerocov/nodejs-hello-world
+      pullPolicy: Always
+      tag: '1.0.0'
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: 3000
+    ingress:
+      enabled: true
+      path: /hello
+    configMap:
+      GOODBYE_SERVICE_ENDPOINT: http://nodejs-goodbye-world.default.svc.cluster.local:80
+  - name: nodejs-goodbye-world
+    image:
+      repository: aerocov/nodejs-goodbye-world
+      pullPolicy: Always
+      tag: '1.0.0'
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: 3500
+    ingress:
+      enabled: true
+      path: /goodbye
+    configMap:
+      HELLO_SERVICE_ENDPOINT: http://nodejs-hello-world.default.svc.cluster.local:80

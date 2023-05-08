@@ -1,0 +1,36 @@
+{{- range .Values.apps }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}
+  labels:
+    app: {{ .name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    annotations:
+      checksum/config: {{ toJson . | sha256sum }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy }}
+          ports:
+            - containerPort: {{ .service.targetPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .service.targetPort }}
+            periodSeconds: 30
+            timeoutSeconds: 10
+          envFrom:
+          - configMapRef:
+              name: {{ .name }}-config
+{{- end }}
