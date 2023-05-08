@@ -9,5 +9,5 @@
   "NotActions": [],
   "DataActions": [],
   "NotDataActions": [],
-  "AssignableScopes": ["/subscriptions/98474ccd-86e6-46f3-b386-6ee28557c801"]
+  "AssignableScopes": ["/subscriptions/<subscription-id>"]
 }
