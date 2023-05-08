@@ -29,3 +29,22 @@ az aks get-credentials --resource-group rg-poc-aksdemo --name aks-poc-aksdemo
 # install app
 helm install aksdemo app
 ```
+
+
+## Test the application
+1. Grab the public IP of the ingress controller
+2. Head to `http://<public-ip>/hello/`, this will return `Hello World` from the `nodejs-hello-world` service 
+3. Head to `http://<public-ip>/goodbye/`, this will return `Goodbye World` from the `nodejs-goodbye-world` service 
+4. Head to `http://<public-ip>/hello/call-goodbye`, this will call the `nodejs-goodbye-world` service from the `nodejs-hello-world` service by its DNS name
+5. Head to `http://<public-ip>/goodbye/call-hello`, this will call the `nodejs-hello-world` service from the `nodejs-goodbye-world` service by its DNS name
+
+
+## Cleanup
+
+```sh
+helm uninstall aksdemo
+
+cd ./terraform
+
+terraform destroy --var-file=values.tfvars
+```
