@@ -11,18 +11,12 @@ terraform {
       source  = "hashicorp/random"
       version = "~>3.0"
     }
-
-    azapi = {
-      source = "Azure/azapi"
-    }
   }
 }
 
 provider "azurerm" {
   features {}
 }
-
-provider "azapi" {}
 
 data "azurerm_client_config" "current" {}
 
