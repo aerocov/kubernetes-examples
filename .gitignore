@@ -186,3 +186,6 @@ override.tf.json
 terraform.rc
 
 terraform.log
+
+# ignore idea files
+.idea

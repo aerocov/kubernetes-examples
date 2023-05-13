@@ -4,6 +4,15 @@
 The following Article will detail the setup from Azure Kubernetes Service (AKS) to Azure Application Gateway (AGIC) to Azure Front Door (AFD).
 It will explain the networking aspect of the setup and how to debug different components. The complete setup is done in Terraform.
 
+There are various ways to setup App gateway over external internet access
+1. Using App Gateway itself connected to the internet,  certificate mangement needs to be maintained by the origanization.
+2. Using Azure Front Door (AFD) to manage the certificate and connect to App Gateway over private IP.
+3. Using Azure Front Door (AFD) to manage the certificate and connect to App Gateway over public IP.
+
+The second approach uses Azure Private link to connect AFD to App Gateway, the AFD in this case needs to be of a Premium SKU.
+
+> We will be following the third way in this documentation.
+
 ### Prerequisites
 - Azure Subscription
 - Terraform installed
@@ -35,6 +44,4 @@ All the required documentation for Azure CNI or Kubenet setup can be found here
 `app-gateway.tf`: Most of the configuration on App Gateway when connecting AKS with AGIC is a placeholder, that is because
 the app gateway ingress controller (AGIC) will modify and maintain `listeners`, `backend settings`, `backend pools`
 > Recommend using an own tf file for App Gateway configuration, this way the backend pool addresses wont be changed on stack deployment. Otherwise on terraform deploy, the backend pool addresses configured by AGIC will be wiped out
-```hcl
 
-```
